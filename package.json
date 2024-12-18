@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "@cypress-audit/lighthouse": "^1.4.2",
+    "cypress": "^13.16.1",
+    "cypress-audit": "^1.1.0",
+    "cypress-real-events": "^1.13.0",
+    "cypress-web-vitals": "^4.1.2"
+  },
+  "dependencies": {
+    "@cypress-audit/pa11y": "^1.4.2",
+    "googleapis": "^144.0.0"
+  }
+}
