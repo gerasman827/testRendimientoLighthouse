@@ -1,15 +1,14 @@
 {
-  "fecha_prueba": "2024-12-20T20:04:09.710Z",
+  "fecha_prueba": "2024-12-20T20:20:26.654Z",
   "resultados": {
     "errors": [
-      "performance record is 0 and is under the 50 threshold"
+      "performance record is 26 and is under the 90 threshold",
+      "first-contentful-paint record is 5115.5740000000005 and is over the 2500 threshold",
+      "largest-contentful-paint record is 5443.174000000001 and is over the 4000 threshold",
+      "total-blocking-time record is 1319 and is over the 200 threshold",
+      "cumulative-layout-shift record is 0.2103242819790563 and is over the 0.1 threshold",
+      "speed-index record is 17297.733143334048 and is over the 4000 threshold"
     ],
-    "results": [
-      "first-contentful-paint record is undefined and threshold was 2500",
-      "largest-contentful-paint record is undefined and threshold was 4000",
-      "total-blocking-time record is undefined and threshold was 200",
-      "cumulative-layout-shift record is undefined and threshold was 0.1",
-      "speed-index record is undefined and threshold was 4000"
-    ]
+    "results": []
   }
 }

@@ -7,7 +7,7 @@ describe('Prueba de rendimiento', () => {
 
     it('Reporte Lighthouse para Desktop', () => {
         const thresholdsDesktop = {
-            performance: 50,
+            performance: 90,
             "first-contentful-paint": 2500,
             "largest-contentful-paint": 4000,
             "total-blocking-time": 200,
