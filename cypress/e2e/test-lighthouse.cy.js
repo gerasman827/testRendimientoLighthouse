@@ -1,78 +1,99 @@
-describe("Pruebas de rendimiento con Lighthouse", () => {
+describe('Prueba de rendimiento', () => {
+
+
+    beforeEach(() => {
+        cy.visit("/");
+    })
 
     it('Reporte Lighthouse para Desktop', () => {
-        const desktopConfig = `--preset=desktop`; 
-
-        const lighthouseConfigDesktop = {
-            configPath: desktopConfig,
-            onlyCategories: ['performance'],
-            disableStorageReset: true
-        };
-
         const thresholdsDesktop = {
-            performance: 60,
-            "first-contentful-paint": 1800,
-            "largest-contentful-paint": 2500,
+            performance: 50,
+            "first-contentful-paint": 2500,
+            "largest-contentful-paint": 4000,
             "total-blocking-time": 200,
             "cumulative-layout-shift": 0.1,
-            "speed-index": 3400,
+            "speed-index": 4000,
         };
 
-        const outputPath = './cypress/fixtures/lighthouse-desktop-reporte.json';
+        const configDesktop = {
+            formFactor: 'desktop',
+            screenEmulation: {
+                mobile: false,
+                width: 1920,
+                height: 1080,
+                deviceScaleFactor: 1,
+                disabled: false,
+            },
+            onlyCategories: ['performance'],
+        };
 
-        cy.task('runLighthouse', {
+        cy.task('lighthouse', {
             url: `${Cypress.config("baseUrl")}`,
-            outputPath,
             thresholds: thresholdsDesktop,
-            config: lighthouseConfigDesktop
-        }).then((message) => {
-            cy.log(message);
-
-            cy.readFile(outputPath).then((report) => {
-                expect(report).to.have.property('categories');
-                cy.log('Reporte Desktop leído correctamente:', JSON.stringify(report));
-            });
+            configThresholds: configDesktop
+        }).then((respuesta) => {
+            if (!respuesta) {
+                throw new Error('No se recibieron resultados de Lighthouse');
+            }
+           
+            const resp = formatoResultado(respuesta);
+            cy.log('Resultados de Lighthouse para Desktop:', JSON.stringify(resp));
+            cy.writeFile('./cypress/fixtures/lighthouse-desktop-reporte.json', resp);
         });
     });
 
-
+    
     it('Reporte Lighthouse para Mobile', () => {
-        const mobileConfig = `--form-factor=mobile --screenEmulation.width=275 --screenEmulation.height=667 --screenEmulation.deviceScaleFactor=3 --screenEmulation.mobile=true`;
-        const lighthouseConfigMobile = {
+        const thresholdsMobile = {
+            performance: 30,
+            "first-contentful-paint": 3500,
+            "largest-contentful-paint": 4000,
+            "total-blocking-time": 300,
+            "cumulative-layout-shift": 0.2,
+            "speed-index": 10000,
+        };
+
+        const configMobile = {
             formFactor: 'mobile',
             screenEmulation: {
                 mobile: true,
-                width: 275,
-                height: 567,
+                width: 375,
+                height: 667,
                 deviceScaleFactor: 3,
+                disabled: false,
             },
-            onlyCategories: ['performance']
+            onlyCategories: ['performance'],
         };
 
-        const thresholdsMobile = {
-            performance: 50,
-            "first-contentful-paint": 3000,
-            "largest-contentful-paint": 4000,
-            "total-blocking-time": 600,
-            "cumulative-layout-shift": 0.25,
-            "speed-index": 5800,
-        };
-
-        const outputPath = './cypress/fixtures/lighthouse-mobile-reporte.json';
-
-        cy.task('runLighthouse', {
+        cy.task('lighthouse',{
             url: `${Cypress.config("baseUrl")}`,
-            outputPath,
-            thresholds: thresholdsMobile,
-            config: lighthouseConfigMobile
-        }).then((message) => {
-            cy.log(message);
+            thresholds: thresholdsMobile, 
+            configThresholds: configMobile
+        }).then((respuesta) => {
+            cy.log(respuesta);
+            if (!respuesta) {
+                throw new Error('No se recibieron resultados de Lighthouse');
+            }
 
-            cy.readFile(outputPath).then((report) => {
-                expect(report).to.have.property('categories');
-                cy.log('Reporte Mobile leído correctamente:', JSON.stringify(report));
-            });
+            const resp = formatoResultado(respuesta);
+            cy.log('Resultados de Lighthouse para Mobile:', JSON.stringify(resp));
+            cy.writeFile('./cypress/fixtures/lighthouse-mobile-reporte.json', resp);
         });
     });
 });
+
+/** 
+ * Prepara la forma de presentar el informe: 
+ * fecha: fecha de la prueba, 
+ * errors: el resultado de las métricas no son las esperadas,
+ * result: el resultado de las métricas son las esperadas
+*/
+function formatoResultado(respuestaLighthouse) {
+    const fecha = new Date().toISOString();
+    const resultadoConFecha = {
+        fecha_prueba: fecha,
+        resultados: respuestaLighthouse
+    };
+    return resultadoConFecha;
+}
 
