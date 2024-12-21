@@ -53,16 +53,20 @@ describe('Prueba de rendimiento', () => {
     };
 
     it('Reporte Lighthouse para Desktop y Móvil', () => {
-        // Desktop Report
-        cy.lighthouse(customThresholds,desktopConfig).then((desktopReport) => {
+        // Escritorio
+        cy.lighthouse(customThresholds, desktopConfig).then((desktopReport) => {
             cy.log(desktopReport);
         });
 
-        // Mobile Report
-        cy.lighthouse(customThresholds,mobileConfig).then((mobileReport) => {
+        // Mobile
+        cy.lighthouse(customThresholds, mobileConfig).then((mobileReport) => {
             cy.log(mobileReport);
         });
 
-    
+        // Task to send data to googlesheet
+        cy.task('processAndUploadData').then((result) => {
+            cy.log('Data processed:', result)
+        });
+
     });
 });

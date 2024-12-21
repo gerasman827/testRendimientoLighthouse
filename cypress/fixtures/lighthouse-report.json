@@ -1,34 +1,18 @@
 [
   {
     "viewport": "desktop",
-    "date": "2024-12-21T04:33:59.535Z",
-    "firstContentfulPaint_FCP": 2298.648,
-    "largestContentfulPaint_LCP": 3954.1764999999996,
-    "cumulativeLayoutShift_CLS": 0.35814556616900695,
-    "speedIndex_SI": 5587.330888179664
+    "date": "2024-12-21T15:55:18.720Z",
+    "firstContentfulPaint_FCP": 2446.4259999999995,
+    "largestContentfulPaint_LCP": 4492.410249999999,
+    "cumulativeLayoutShift_CLS": 0.3586853602884184,
+    "speedIndex_SI": 5672.57817222652
   },
   {
     "viewport": "mobile",
-    "date": "2024-12-21T04:34:19.422Z",
-    "firstContentfulPaint_FCP": 7493.28175,
-    "largestContentfulPaint_LCP": 8458.274000000001,
+    "date": "2024-12-21T15:55:43.143Z",
+    "firstContentfulPaint_FCP": 7267.5589999999975,
+    "largestContentfulPaint_LCP": 8299.150499999998,
     "cumulativeLayoutShift_CLS": 0.21116569024748041,
-    "speedIndex_SI": 18273.062585188636
-  },
-  {
-    "viewport": "desktop",
-    "date": "2024-12-21T04:35:58.528Z",
-    "firstContentfulPaint_FCP": 2182.415,
-    "largestContentfulPaint_LCP": 3993.843999999999,
-    "cumulativeLayoutShift_CLS": 0.35814556616900695,
-    "speedIndex_SI": 6071.99651997662
-  },
-  {
-    "viewport": "mobile",
-    "date": "2024-12-21T04:36:19.019Z",
-    "firstContentfulPaint_FCP": 7656.703000000002,
-    "largestContentfulPaint_LCP": 9129.885000000002,
-    "cumulativeLayoutShift_CLS": 0.009341367933107707,
-    "speedIndex_SI": 19046.818929521534
+    "speedIndex_SI": 18669.882970181265
   }
 ]

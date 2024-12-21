@@ -9,15 +9,29 @@ module.exports = {
         prepareAudit(launchOptions);
       });
 
+      on('task', {
+        processAndUploadData: async () => {
+          try {
+            // Llama a la función asíncrona y espera a que se resuelva
+            const result = await processAndUploadData();
+            return result;  // Retorna los datos procesados a Cypress
+          } catch (error) {
+            console.error('Error al ejecutar processAndUploadData:', error);
+            return null;  // Retorna null si ocurre un error
+          }
+        },
+      });
+
+
       on("task", {
         lighthouse: lighthouse((lighthouseReport) => {
           const filePath = "./cypress/fixtures/lighthouse-report.json";
 
-          let existingData = [];
+          let data = [];
           if (fs.existsSync(filePath)) {
             try {
               const fileContent = fs.readFileSync(filePath, "utf-8");
-              existingData = JSON.parse(fileContent);
+              data = JSON.parse(fileContent);
             } catch (error) {
               console.error("Error leyendo el archivo", error);
             }
@@ -33,15 +47,12 @@ module.exports = {
             speedIndex_SI: lhr.audits['speed-index'].numericValue,
           }
           
-          existingData.push(report);
+          data.push(report);
 
-          fs.writeFile(filePath, JSON.stringify(existingData, null, 2), (error) => {
-            if (error) {
-              console.error("Error escribiendo el archivo", error);
-            } else {
-              console.log("Reporte adicionado exitosamente");
-            }
+          fs.writeFile(filePath, JSON.stringify(data, null, 2), (error) => {
+            error ? console.error("Error escribiendo el archivo", error) : console.log("Reporte adicionado exitosamente");
           });
+          
 
           return true;
         })
